@@ -1,24 +1,4 @@
-# PwC FDE Case Playbook
-
-Oct 15, 2026 · @Manan Bhatia
-
-## 1. First 15 minutes
-
-Check the environment before planning anything; a wrong assumption here costs the whole case.
-
-**Logistics**
-
-- [ ] May I use this playbook and the chatbot? May I take notes?
-- [ ] How do I hand in: repo, zip, shared folder? Who are the assessors?
-
-**Environment**
-
-- [ ] Python version; can I create a virtual environment and pip install?
-- [ ] Editor: VS Code? Is there an agent inside it, or only a chat window?
-- [ ] Which chatbot and model? Can it browse? Can it take file attachments?
-- [ ] LLM access for the solution: provider, key or endpoint, model or deployment name.
-- [ ] Run check\_llm.py (section 2). Is temperature settable?
-- [ ] Internet access? Git installed?
+# Case Playbook
 
 **Client questions (1–2, only if the brief leaves them open)**
 
