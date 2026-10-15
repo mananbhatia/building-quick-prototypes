@@ -154,7 +154,7 @@ Attach in this order: `context.md`, `draft_plan.md`, `grilling.md` (material fir
 
 **Opening message**
 
-> I'm building a prototype for the client case in context.md, in Python, with a \[X\]-minute time box. I'll build it by copy-pasting code from a coding assistant. draft\_plan.md is my draft plan, including my expected outputs. Follow the instructions in grilling.md and grill my plan.
+> I'm building a prototype for the client case in context.md, in Python, with a \[X\]-minute time box. I'll build it by copy-pasting code from a coding assistant. Use Pydantic for the data models and to validate every LLM output. draft\_plan.md is my draft plan, including my expected outputs. Follow the instructions in grilling.md and grill my plan.
 
 For document questions, add the line from section 7.
 
@@ -165,13 +165,13 @@ For document questions, add the line from section 7.
 > - Maximum 2 rounds, at most 5 short questions per round.
 > - Everything you need is pasted in this chat; don't look anything up.
 > - Focus on: who uses the output; what each type of error costs and in which direction; what the LLM decides versus plain code; information the inputs may not contain; what fits in the time box.
-> - When a decision needs a fact the client hasn't given, don't guess: tell me to ask the client.
+> - When a decision needs a fact the client hasn't given, don't guess silently: tell me it's a question for the client, and propose the safest assumption (the one whose failure goes to review or toward the costliest-error side), marked "confirm with client".
 > - For any value a rule depends on, prefer the system of record over text the model reads.
 > - If one of my expected outputs looks wrong, say so; don't change it.
 > - Build order: a thin vertical slice first. One input through every stage with the simplest version of each, done within the first third of the time box. Then widen. Each step gets a one-line "done when" test.
 > - Scope: cut anything no rule, test or safety guarantee depends on; list the cuts as next steps. Keep PLAN.md to about one page.
 > - When I say "write PLAN.md", write: the problem; testable success criteria; the LLM vs code split with reasons; functions with inputs and outputs (kept items only); build order as slice steps with "done when" tests; out of scope and next steps; assumptions, each marked "confirm with client". PLAN.md must be self-contained: include the client's definitions and rules in their own wording. Keep the expected outputs out of PLAN.md; they live only in labels.csv.
-> - Time box: \[X\] minutes.
+> - Time box: \[build minutes, e.g. 60\] minutes.
 
 **While answering:** on the decisions I'll have to defend (LLM vs code, failure handling, the costliest error), never reply just "yes"; add one line of why in my own words.
 
@@ -213,7 +213,20 @@ Short prompts; control comes from the plan's steps and from checking every answe
 
 **B7. README:**
 
-> Draft README.md from PLAN.md and what we built. No length limit, but no filler; scannable sections: the problem and the user; how to run it; design decisions and why (keep my wording from PLAN.md), including what the LLM does and what code does; evaluation results \[paste metrics lines, e.g. baseline vs final run\] with any mismatch explained, not hidden; limitations (including sample size and anything stubbed or cut); production next steps (security, data residency, monitoring, human review, scaling). Include these points in my words: \[paste my key arguments\]. No claims beyond what the results show.
+> Write README.md as a senior AI engineer would for a client and a technical reviewer: clear, scannable, short sentences, no marketing language, no claims beyond what the results show. Keep my wording from PLAN.md for decisions. Sections, in this order:
+>
+> 1. Title and a one-line summary.
+> 2. TL;DR (3 bullets): what it does, the headline result (costliest-error metric first), how to run it.
+> 3. Problem and users: in the client's terms, including the costliest error and why.
+> 4. Architecture: a Mermaid flowchart (\`\`\`mermaid) of the pipeline from input to output, with LLM steps and code steps visibly different, plus a table "Step | LLM or code | Why".
+> 5. Key decisions: a table "Decision | Why | Alternative considered".
+> 6. Worked example: one input end to end: input → what the LLM extracted → which rules fired → final output.
+> 7. Evaluation: method (labels I wrote, sample size), a table baseline vs final \[paste metrics lines\], every mismatch explained.
+> 8. Limitations and assumptions: each assumption marked "confirm with client"; include sample size and anything cut.
+> 9. Production next steps: security and data residency, monitoring, human review, cost and scale.
+> 10. How to run, project layout, tests.
+>
+> Include these points in my words: \[paste my key arguments\].
 
 ### Loop per step
 
